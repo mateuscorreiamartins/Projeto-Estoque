@@ -3,10 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Teste Inicial</title>
+    <title>Login - Controle de Estoque</title>
     <link rel="stylesheet" href="../static/css/login.css">
 </head>
 <body>
-    <h1>Teste Inicial</h1>
+    <div class="login-container">
+        <h2>Acesso ao Sistema</h2>
+        <p>Controle de Estoque</p>
+        
+        <form action="/login" method="POST">
+            <div class="input-group">
+                <label for="username">Usuário</label>
+                <input type="text" id="username" name="username" required placeholder="Digite seu login">
+            </div>
+            
+            <div class="input-group">
+                <label for="password">Senha</label>
+                <input type="password" id="password" name="password" required placeholder="Digite sua senha">
+            </div>
+            
+            <button type="submit" class="btn-login">Entrar</button>
+        </form>
+
+        <!-- Espaço para exibir mensagens de erro/sucesso (flash messages) -->
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            <div class="alert">
+              {{ messages }}
+            </div>
+          {% endif %}
+        {% endwith %}
+    </div>
 </body>
 </html>
