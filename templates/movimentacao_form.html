@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="pt-pt">
+<head>
+    <meta charset="UTF-8">
+    <title>Movimentar Estoque - {{ produto.nome }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <div class="container-alertas">
+          {% for message in messages %}
+            <div class="alerta-sistema">{{ message }}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+    <div class="login-container">
+        <form action="{{ url_for('movimentar', id_produto=produto.id_produto) }}" method="POST" class="login-form">
+            <h2>Movimentação: {{ produto.nome }}</h2>
+            <p>Saldo Atual: <strong>{{ produto.quantidade_atual }}</strong></p>
+            
+            <select name="tipo_movimentacao" required class="select-field">
+                <option value="entrada">Entrada</option>
+                <option value="saida">Saída</option>
+            </select>
+            
+            <input type="number" step="0.1" name="quantidade" placeholder="Quantidade" required>
+            <button type="submit" class="login-button">Confirmar Operação</button>
+            <a href="{{ url_for('dashboard') }}" class="link-voltar">Cancelar</a>
+        </form>
+    </div>
+</body>
+</html>

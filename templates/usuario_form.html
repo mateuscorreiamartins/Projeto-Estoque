@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="pt-pt">
+<head>
+    <meta charset="UTF-8">
+    <title>Novo Utilizador - Controle de Estoque</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="login-container">
+        <form action="{{ url_for('cadastrar_usuario') }}" method="POST" class="login-form">
+            <h2>Registar Novo Utilizador</h2>
+            <input type="text" name="nome" placeholder="Nome Completo" required>
+            <input type="text" name="login" placeholder="Nome de Utilizador" required>
+            <input type="password" name="senha" placeholder="Senha de Acesso" required>
+            
+            <select name="tipo_acesso" required class="select-field">
+                <option value="Comum">Perfil Comum</option>
+                <option value="Administrador">Perfil Administrador</option>
+            </select>
+            
+            <button type="submit" class="login-button">Criar Conta</button>
+            <a href="{{ url_for('dashboard') }}" class="link-voltar">Voltar ao Painel</a>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,12 +1,24 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-pt">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - Controle de Estoque</title>
-    <link rel="stylesheet" href="../static/css/login.css">
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
+    <!-- Bloco de Alertas -->
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <div class="container-alertas">
+          {% for message in messages %}
+            <div class="alerta-sistema">{{ message }}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
     <div class="login-container">
         <h2>Acesso ao Sistema</h2>
         <p>Controle de Estoque</p>
@@ -14,25 +26,17 @@
         <form action="/login" method="POST">
             <div class="input-group">
                 <label for="username">Usuário</label>
-                <input type="text" id="username" name="username" required placeholder="Digite seu login">
+                
+                <input type="text" id="username" name="login" required placeholder="Digite seu login">
             </div>
             
             <div class="input-group">
                 <label for="password">Senha</label>
-                <input type="password" id="password" name="password" required placeholder="Digite sua senha">
+                <input type="password" id="password" name="senha" required placeholder="Digite sua senha">
             </div>
             
             <button type="submit" class="btn-login">Entrar</button>
         </form>
-
-        <!-- Espaço para exibir mensagens de erro/sucesso (flash messages) -->
-        {% with messages = get_flashed_messages() %}
-          {% if messages %}
-            <div class="alert">
-              {{ messages }}
-            </div>
-          {% endif %}
-        {% endwith %}
     </div>
 </body>
 </html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pt-pt">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard - Controle de Estoque</title>
+    <!-- Link com o CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="dashboard-body">
+    <!-- Bloco de Alertas do Sistema (Flash Messages) -->
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <div class="container-alertas">
+          {% for message in messages %}
+            <div class="alerta-sistema">{{ message }}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    <div class="container-dashboard">
+        <header>
+            <h1>Painel de Controle de Estoque</h1>
+            <p>Bem-vindo, <strong>{{ session['user_nome'] }}</strong> ({{ session['user_perfil'] }})</p>
+            
+            <nav>
+                
+                <a href="{{ url_for('cadastrar_produto') }}" class="btn">Novo Produto</a>
+                <a href="{{ url_for('visualizar_historico') }}" class="btn" style="background-color: #3498db;">Ver Histórico</a>
+                
+                <!-- Somente o administrador pode cadastrar novos utilizadores -->
+                {% if session['user_perfil'] == 'Administrador' %}
+                    <a href="{{ url_for('cadastrar_usuario') }}" class="btn">Novo Utilizador</a>
+                {% endif %}
+                
+                <a href="{{ url_for('logout') }}" class="btn-danger">Sair</a>
+            </nav>
+        </header>
+
+        <section class="estoque-section">
+            <h2>Estoque Atual</h2>
+            <table>
+                <thead>
+                    <tr>
+                        
+                        <th>Produto</th>
+                        <th>Categoria</th>
+                        <th>Preço</th>
+                        <th>Qtd. Atual</th>
+                        <th>Qtd. Mínima</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for produto in produtos %}
+                    <!-- Destaque visual para produtos abaixo da quantidade mínima -->
+                    <tr class="{{ 'alerta-estoque' if produto.quantidade_atual < produto.quantidade_minima }}">
+                        <td>{{ produto.nome }}</td>
+                        <td>{{ produto.categoria }}</td>
+                        <td>€ {{ "%.2f"|format(produto.preco) }}</td>
+                        <td>{{ produto.quantidade_atual }}</td>
+                        <td>{{ produto.quantidade_minima }}</td>
+                        <td>
+                            <!-- Permite atualizar entrada e saída de mercadorias -->                           
+                            <a href="{{ url_for('movimentar', id_produto=produto.id_produto) }}" class="btn-sm">Movimentar</a>
+
+                            <!-- Botão de exclusão visível apenas para o Perfil Administrador -->
+                            {% if session['user_perfil'] == 'Administrador' %}
+                            <form action="{{ url_for('excluir_produto', id_produto=produto.id_produto) }}" method="POST" style="display:inline;">
+                                <button type="submit" class="btn-sm" style="background-color: #e74c3c; border: none; cursor: pointer; margin-left: 5px;" 
+                                        onclick="return confirm('Tem certeza que deseja excluir este produto?')">Excluir</button>
+                            </form>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </section>
+    </div>
+</body>
+</html>
