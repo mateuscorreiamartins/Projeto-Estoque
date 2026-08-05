@@ -15,14 +15,14 @@ app.config['SECRET_KEY'] = getenv('SECRET_KEY')
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///estoque.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-# 4. Inicializa o banco de dados com as configurações do app
+# Inicializa o banco de dados com as configurações do app
 db.init_app(app)
 
-# 5. Cria o banco de dados (estoque.db) e as tabelas 
+# Cria o banco de dados (estoque.db) e as tabelas 
 with app.app_context():
     db.create_all()
 
-# 6. Importa as rotas
+# Importa as rotas
 from views import *
 
 if __name__ == "__main__":
