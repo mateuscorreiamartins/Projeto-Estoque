@@ -33,3 +33,7 @@ class Movimentacao(db.Model):
     # Chaves Estrangeiras (FK) que ligam as tabelas Usuario e Produto
     id_usuario = db.Column(db.Integer, db.ForeignKey('usuario.id_usuario'), nullable=False)
     id_produto = db.Column(db.Integer, db.ForeignKey('produto.id_produto'), nullable=False)
+
+    # Criam o link para usar mov.produto e mov.usuario no HTML
+    produto = db.relationship('Produto', backref='movimentacoes')
+    usuario = db.relationship('Usuario', backref='movimentacoes')
