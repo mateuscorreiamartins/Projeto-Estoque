@@ -45,11 +45,19 @@ Integridade de Dados: Proteção contra exclusão acidental de produtos que poss
 # Estrutura Organizacional
 
 ├── instance/              # Pasta local criada dinamicamente contendo o banco SQLite (ignorado pelo Git)
+
 ├── models/                # Modelos de dados e representação lógica das tabelas
+
 ├── static/                # Arquivos estáticos
+
 ├── templates/             # Páginas HTML 
+
 ├── views.py               # Rotas, controladores e lógica de negócios da aplicação
+
 ├── schema.sql             # Script SQL de modelagem do banco físico
+
 ├── popular_banco.py       # Script utilitário para inicializar e popular o banco de dados
+
 ├── main.py                # Ponto de entrada da aplicação
+
 └── .gitignore             # Arquivo de exclusão de arquivos locais do Git
