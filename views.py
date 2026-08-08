@@ -38,7 +38,7 @@ def login():
 
 
 
-# 2. Dashboard (Visualização com Alertas de Estoque) 
+# Dashboard (Visualização com Alertas de Estoque) 
 @app.route('/dashboard')
 def dashboard():
     if 'user_id' not in session:
@@ -85,7 +85,7 @@ def cadastrar_produto():
             
     return render_template('produto_form.html')
 
-# 4. Movimentação (Entrada e Saída)
+# Movimentação (Entrada e Saída)
 @app.route('/movimentacao/<int:id_produto>', methods=['GET', 'POST'])
 def movimentar(id_produto):
     if 'user_id' not in session:
@@ -124,7 +124,7 @@ def movimentar(id_produto):
             
     return render_template('movimentacao_form.html', produto=produto)
 
-# 5. Cadastro de Usuário (Somente Administrador) 
+# Cadastro de Usuário (Somente Administrador) 
 @app.route('/usuario/novo', methods=['GET', 'POST'])
 def cadastrar_usuario():
     if session.get('user_perfil') != 'Administrador':
@@ -144,16 +144,19 @@ def cadastrar_usuario():
 
         # Tenta salvar no banco de dados
         try:
+            # hash seguro da senha digitada
+            senha_criptografada = generate_password_hash(senha_nova)
             novo_usuario = Usuario(
                 nome=nome,
                 login=login_novo,
-                senha=generate_password_hash(senha_nova),
+                senha=senha_criptografada,
                 tipo_acesso=perfil
             )
             db.session.add(novo_usuario)
             db.session.commit()
             flash(f'Utilizador {login_novo} criado com sucesso!')
             return redirect(url_for('dashboard'))
+        
         except Exception as e:
             db.session.rollback()
             flash('Erro ao criar utilizador. O login pode ja existir.')
