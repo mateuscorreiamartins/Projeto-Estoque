@@ -36,10 +36,15 @@ O console exibirá que o servidor está no ar e escutando na porta 5000, basta c
 # Funcionalidades Principais
 
 Autenticação e Sessão de Usuário: Sistema seguro de login com controle de perfis de acesso (Administrador e Comum).
+
 Criptografia por Hash (Werkzeug): Armazenamento seguro de senhas através de algoritmos de hash de sentido único, protegendo as credenciais de ponta a ponta.
+
 Gestão de Estoque: Cadastro de produtos, controle de quantidades, categorias e valores monetários.
+
 Alertas de Estoque Baixo: Visualização destacada para produtos que estão abaixo do nível mínimo de estoque configurado.
+
 Histórico de Movimentações: Registro detalhado de cada entrada e saída de produto, vinculado ao usuário que executou a ação.
+
 Integridade de Dados: Proteção contra exclusão acidental de produtos que possuam histórico de movimentações ativo (restrição em nível de banco de dados).
 
 # Estrutura Organizacional
