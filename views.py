@@ -2,6 +2,7 @@ from main import app
 from flask import render_template, request, redirect, url_for, session, flash
 from models.models import db, Usuario, Produto, Movimentacao
 from datetime import datetime
+from werkzeug.security import generate_password_hash, check_password_hash
 
 # Rotas
 
@@ -19,15 +20,17 @@ def login():
         senha_input = request.form.get('senha')
         
         # Busca o usuário no banco de dados
-        user = Usuario.query.filter_by(login=login_input, senha=senha_input).first()
+        user = Usuario.query.filter_by(login=login_input).first()
         
-        if user:
+        # 2. Verifica se o utilizador existe e se a senha digitada corresponde ao hash salvo
+        if user and check_password_hash(user.senha, senha_input):
             # Inicia a Sessão de Usuário
             session['user_id'] = user.id_usuario
             session['user_nome'] = user.nome
             session['user_perfil'] = user.tipo_acesso # Administrador ou Comum
             return redirect(url_for('dashboard'))
         else:
+            # Caso o login não exista ou a senha seja incorreta
             flash('Login ou senha incorretos.')
             
     return render_template('login.html')
@@ -144,7 +147,7 @@ def cadastrar_usuario():
             novo_usuario = Usuario(
                 nome=nome,
                 login=login_novo,
-                senha=senha_nova,
+                senha=generate_password_hash(senha_nova),
                 tipo_acesso=perfil
             )
             db.session.add(novo_usuario)
