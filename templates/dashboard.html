@@ -57,7 +57,7 @@
                     <tr class="{{ 'alerta-estoque' if produto.quantidade_atual < produto.quantidade_minima }}">
                         <td>{{ produto.nome }}</td>
                         <td>{{ produto.categoria }}</td>
-                        <td>€ {{ "%.2f"|format(produto.preco) }}</td>
+                        <td>R$ {{ "%.2f"|format(produto.preco)|replace('.', ',') }}</td>
                         <td>{{ produto.quantidade_atual }}</td>
                         <td>{{ produto.quantidade_minima }}</td>
                         <td>
